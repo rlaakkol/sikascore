@@ -1,0 +1,6 @@
+{
+  "name": "SikaScore",
+  "short_name": "Sika",
+  "start_url": "/scorecard",
+  "display": "standalone"
+}
