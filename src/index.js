@@ -6,12 +6,21 @@ import * as storage from 'redux-storage'
 import createEngine from 'redux-storage-engine-localstorage'
 import { Router, Route, IndexRoute, browserHistory } from 'react-router'
 
+import uuid from 'uuid/v4'
+
 import App from './components/app'
 import Scorecard from './components/scorecard'
 import ScoreBoard from './components/scoreboard'
 import HelpPage from './components/helppage'
 import rootReducer from './reducers'
 import { ADD_ALERT } from './actions'
+
+let gameId = localStorage.getItem('sika-gameid')
+
+if (gameId === null) {
+  gameId = uuid()
+  localStorage.setItem('sika-gameid', gameId)
+} 
 
 const reducer = storage.reducer(rootReducer)
 const engine = createEngine('sikascore')

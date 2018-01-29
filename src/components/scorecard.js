@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux'
 
 import PigPicker from './pigpicker'
 import SubmitButton from './submit'
+import Capture from './capture'
 import Pig from '../utils/pig'
 import * as Actions from '../actions'
 
@@ -41,6 +42,7 @@ const Scorecard = props => {
   return (
     <div>
       <div className="container">
+        <Capture/>
         <div className="row equal">
           <div className="col-lg-12">
             <strong>{props.scoreBoard.length % props.players + 1}</strong>
