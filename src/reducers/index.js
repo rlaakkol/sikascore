@@ -1,12 +1,13 @@
 import { combineReducers } from 'redux'
-import { currentThrow, currentTurn, scoreBoard, playerAmount, alerts } from './reducers'
+import { currentThrow, currentTurn, scoreBoard, playerAmount, alerts, processedImage } from './reducers'
 
 const rootReducer = combineReducers({
   currentThrow,
   currentTurn,
   scoreBoard,
   players: playerAmount,
-  alerts
+  alerts,
+  processedImage
 })
 
 export default rootReducer

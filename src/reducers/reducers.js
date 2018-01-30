@@ -7,7 +7,8 @@ import {
   UNDO_LAST_TURN,
   ADD_ALERT,
   REMOVE_ALERT,
-  CHANGE_PLAYER_AMOUNT
+  CHANGE_PLAYER_AMOUNT,
+  SET_PROCESSED_IMAGE
 } from '../actions'
 
 const currentThrow = (state = [null, null], action) => {
@@ -70,4 +71,13 @@ const alerts = (state = [], action) => {
   }
 }
 
-export { currentThrow, currentTurn, scoreBoard, playerAmount, alerts }
+const processedImage = (state = null, action) => {
+  switch (action.type) {
+    case SET_PROCESSED_IMAGE:
+      return action.imageData
+    default:
+      return state
+  }
+}
+
+export { currentThrow, currentTurn, scoreBoard, playerAmount, alerts, processedImage }

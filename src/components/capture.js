@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Webcam from 'react-webcam'
 import { Button } from 'react-bootstrap'
 
@@ -7,38 +8,26 @@ class Capture extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = {
-      imageData: null
-    }
-
     this.capture = this.capture.bind(this)
-    this.enable = this.enable.bind(this)
   }
 
   capture() {
     const imageData = this.webcam.getScreenshot()
-    this.setState({ imageData })
-  }
-
-  enable() {
-    this.setState({ imageData: null })
+    this.props.handleCapture(imageData)
   }
 
   render() {
-
-    console.log(this.state.imageData)
 
     return (
       <div>
         <div>
           <div>
+            {!this.props.processedImage ?
             <Webcam
               audio={false}
               ref={node => (this.webcam = node)}
-            />
-          </div>
-          <div>
-            {this.state.imageData ? <img src={this.state.imageData} alt="foo"/> : ''}
+            /> :
+            <img src={this.props.processedImage} alt="processed"/>}
           </div>
         </div>
         <div>
@@ -49,7 +38,7 @@ class Capture extends React.Component {
               Capture
             </Button>
             <Button
-              onClick={this.enable}
+              onClick={this.props.handleRetake}
             >
               Retake
             </Button>
@@ -57,6 +46,12 @@ class Capture extends React.Component {
         </div>
       </div>)
   }
+}
+
+Capture.propTypes = {
+  handleCapture: PropTypes.func,
+  handleRetake: PropTypes.func,
+  processedImage: PropTypes.string
 }
 
 export default Capture

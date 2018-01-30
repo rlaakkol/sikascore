@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { Button } from 'react-bootstrap'
 
 import PigPicker from './pigpicker'
 import SubmitButton from './submit'
@@ -13,6 +14,15 @@ const Scorecard = props => {
     const theThrow = props.currentThrow.slice()
     theThrow[pigId] = value
     props.setThrow(theThrow)
+  }
+
+  const handleCapture = imageData => 
+    props.setProcessedImage(imageData)
+
+  const handleEndTurn = () => {
+    props.addTurn(props.currentTurn)
+    props.updateCurrent([])
+    props.setThrow([null, null])
   }
 
   const buttons = [
@@ -42,8 +52,12 @@ const Scorecard = props => {
   return (
     <div>
       <div className="container">
-        <Capture/>
-        <div className="row equal">
+        <Capture
+          processedImage={props.processedImage}
+          handleCapture={handleCapture}
+          handleRetake={() => handleCapture(null)}
+        />
+        <div className="row">
           <div className="col-lg-12">
             <strong>{props.scoreBoard.length % props.players + 1}</strong>
           </div>
@@ -51,18 +65,23 @@ const Scorecard = props => {
         <div className="h-divider" />
         {pickers}
         <div className="h-divider" />
-        <div className="row equal">
+        <div className="row">
           <div className="col-md-6">
             <strong>Kokonaispisteet:</strong> {current} {turnTotal}
           </div>
         </div>
       </div>
-      <div className="container footer-fixed">
-        <div className="row equal">
+      <div className="container">
+        <div className="row">
           <div className="col-md-2 col-md-offset-2">
             <SubmitButton className="btn btn-block btn-success">
               Submit
             </SubmitButton>
+          </div>
+          <div className="col-md-2 col-md-offset-2">
+            <Button className="btn btn-block btn-warning" onClick={handleEndTurn}>
+              End turn
+            </Button>
           </div>
         </div>
       </div>
@@ -75,6 +94,7 @@ Scorecard.propTypes = {
   currentTurn: React.PropTypes.array,
   scoreBoard: React.PropTypes.array,
   players: React.PropTypes.number,
+  processedImage: React.PropTypes.string
 }
 
 function mapStateToProps(state) {
@@ -82,7 +102,8 @@ function mapStateToProps(state) {
     currentThrow: state.currentThrow,
     currentTurn: state.currentTurn,
     players: state.players,
-    scoreBoard: state.scoreBoard
+    scoreBoard: state.scoreBoard,
+    processedImage: state.processedImage
   }
 }
 
@@ -92,7 +113,8 @@ function mapDispatchToProps(dispatch) {
       setThrow: Actions.setThrow,
       undoThrow: Actions.undoThrow,
       updateCurrent: Actions.updateCurrent,
-      addTurn: Actions.addturn
+      addTurn: Actions.addTurn,
+      setProcessedImage: Actions.setProcessedImage
     },
     dispatch
   )

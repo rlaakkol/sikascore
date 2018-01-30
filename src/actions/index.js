@@ -7,6 +7,7 @@ export const UNDO_LAST_TURN = 'UNDO_LAST_TURN'
 export const CHANGE_PLAYER_AMOUNT = 'CHANGE_PLAYER_AMOUNT'
 export const ADD_ALERT = 'ADD_ALERT'
 export const REMOVE_ALERT = 'REMOVE_ALERT'
+export const SET_PROCESSED_IMAGE = 'SET_PROCESSED_IMAGE'
 
 /*
  * action creators
@@ -53,5 +54,12 @@ export function removeAlert(id) {
   return {
     type: REMOVE_ALERT,
     id
+  }
+}
+
+export function setProcessedImage(imageData) {
+  return {
+    type: SET_PROCESSED_IMAGE,
+    imageData
   }
 }
