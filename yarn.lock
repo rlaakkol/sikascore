@@ -54,6 +54,12 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
+"@cliener/react-webcam@^0.3.2":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@cliener/react-webcam/-/react-webcam-0.3.2.tgz#1c78c342500efbf6530ba1d0a1d85c0ce5e21ed0"
+  dependencies:
+    prop-types "^15.5.8"
+
 abab@^1.0.0:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/abab/-/abab-1.0.4.tgz#5faad9c2c07f60dd76770f71cf025b62a63cfd4e"
@@ -3311,6 +3317,10 @@ react-bootstrap@^0.30.7:
     uncontrollable "^4.0.1"
     warning "^3.0.0"
 
+react-camera@^0.1.3:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/react-camera/-/react-camera-0.1.3.tgz#abe78942a3a905350af692d0072bbb6c1196515b"
+
 react-dom@^15.4.2:
   version "15.6.2"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-15.6.2.tgz#41cfadf693b757faf2708443a1d1fd5a02bef730"
@@ -3365,12 +3375,6 @@ react-router@^2.0.1:
     invariant "^2.2.1"
     loose-envify "^1.2.0"
     warning "^3.0.0"
-
-react-webcam@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/react-webcam/-/react-webcam-0.2.0.tgz#03f8ce6811ae73e9d3158cbd17345a6832b23353"
-  dependencies:
-    prop-types "^15.5.8"
 
 react@^15.4.2:
   version "15.6.2"

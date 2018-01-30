@@ -22,6 +22,8 @@ module.exports = {
         "react/no-danger": "off",
         "quotes": ["error", "single"],
         "semi": ["error", "never"],
-        "no-plusplus": "off"
+        "no-plusplus": "off",
+        "import/no-named-as-default": "off",
+        "import/no-named-as-default-member": "off"
     }
 };

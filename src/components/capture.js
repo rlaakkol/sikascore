@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Webcam from 'react-webcam'
 import { Button } from 'react-bootstrap'
+
+import Webcam from '../modules/react-webcam'
 
 class Capture extends React.Component {
 
@@ -18,30 +19,34 @@ class Capture extends React.Component {
 
   render() {
 
+    const button = this.props.processedImage ?
+      <Button
+        onClick={this.props.handleRetake}
+      >
+        Again?
+      </Button> :
+      <Button
+        onClick={this.capture}
+      >
+        Capture
+      </Button>
+
     return (
-      <div>
-        <div>
-          <div>
+      <div className="container">
+        <div className="row">
+          <div className="col-lg-12">
             {!this.props.processedImage ?
             <Webcam
               audio={false}
               ref={node => (this.webcam = node)}
+              screenshotFormat="image/jpeg"
             /> :
             <img src={this.props.processedImage} alt="processed"/>}
           </div>
         </div>
-        <div>
-          <div>
-            <Button
-              onClick={this.capture}
-            >
-              Capture
-            </Button>
-            <Button
-              onClick={this.props.handleRetake}
-            >
-              Retake
-            </Button>
+        <div className="row">
+          <div className="col-lg-2 col-offset-lf-5">
+            {button}
           </div>
         </div>
       </div>)

@@ -51,12 +51,12 @@ const Scorecard = props => {
   const turnTotal = Pig.turnScore(props.currentTurn)
   return (
     <div>
+      <Capture
+        processedImage={props.processedImage}
+        handleCapture={handleCapture}
+        handleRetake={() => handleCapture(null)}
+      />
       <div className="container">
-        <Capture
-          processedImage={props.processedImage}
-          handleCapture={handleCapture}
-          handleRetake={() => handleCapture(null)}
-        />
         <div className="row">
           <div className="col-lg-12">
             <strong>{props.scoreBoard.length % props.players + 1}</strong>
