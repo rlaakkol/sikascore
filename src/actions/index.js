@@ -1,6 +1,7 @@
 export const SET_THROW = 'SET_THROW'
 export const ADD_TURN = 'ADD_TURN'
 export const UPDATE_CURRENT = 'UPDATE_CURRENT'
+export const NEW_TURN = 'NEW_TURN'
 export const UNDO_THROW = 'UNDO_THROW'
 export const CLEAR_TURNS = 'CLEAR_TURNS'
 export const UNDO_LAST_TURN = 'UNDO_LAST_TURN'
@@ -19,6 +20,10 @@ export function setThrow(value) {
 
 export function updateCurrent(value) {
   return { type: UPDATE_CURRENT, throw: value }
+}
+
+export function newTurn() {
+  return { type: NEW_TURN }
 }
 
 export function undoThrow() {

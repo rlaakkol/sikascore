@@ -24,6 +24,7 @@ module.exports = {
         "semi": ["error", "never"],
         "no-plusplus": "off",
         "import/no-named-as-default": "off",
-        "import/no-named-as-default-member": "off"
+        "import/no-named-as-default-member": "off",
+        "no-nested-ternary": "off"
     }
 };

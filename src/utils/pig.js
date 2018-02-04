@@ -31,9 +31,11 @@ const throwScore = (theThrow) => {
 
 const turnScore = throws =>
   throws.length > 0
-    ? throws.
-        map(throwScore).
-        reduce((acc, cur) => cur < 1 ? 0 : acc + cur)
-    : 0
+    ? throws[throws.length - 1] !== -1
+      ? throws.
+          map(throwScore).
+          reduce((acc, cur) => cur < 1 ? 0 : acc + cur)
+      : -1 /* Makin bacon */
+  : 0
 
 export default { Position, throwScore, turnScore }

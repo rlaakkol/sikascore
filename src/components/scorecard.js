@@ -20,8 +20,8 @@ const Scorecard = props => {
     props.setProcessedImage(imageData)
 
   const handleEndTurn = () => {
-    props.addTurn(props.currentTurn)
-    props.updateCurrent([])
+    props.addTurn(props.currentTurn.slice())
+    props.newTurn()
     props.setThrow([null, null])
   }
 
@@ -113,6 +113,7 @@ function mapDispatchToProps(dispatch) {
       setThrow: Actions.setThrow,
       undoThrow: Actions.undoThrow,
       updateCurrent: Actions.updateCurrent,
+      newTurn: Actions.newTurn,
       addTurn: Actions.addTurn,
       setProcessedImage: Actions.setProcessedImage
     },

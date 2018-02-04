@@ -1,6 +1,7 @@
 import {
   SET_THROW,
   UPDATE_CURRENT,
+  NEW_TURN,
   UNDO_THROW,
   ADD_TURN,
   CLEAR_TURNS,
@@ -24,6 +25,8 @@ const currentTurn = (state = [], action) => {
   switch (action.type) {
     case UPDATE_CURRENT:
       return [...state, action.throw]
+    case NEW_TURN:
+      return []
     case UNDO_THROW:
       return state.slice(0, -1)
     default:

@@ -5,6 +5,9 @@ import _ from 'lodash'
 import Pig from '../utils/pig'
 
 const ScoreBoard = props => {
+
+  console.log(props.scores)
+  console.log(props.scores.map(turn => turn.map(Pig.throwScore)))
   const header = _.range(0, props.players).map(i => (
     <th key={i}>
       Player {i + 1}
@@ -20,29 +23,33 @@ const ScoreBoard = props => {
 
   const turnScores = playerturns.map(player => player.map(Pig.turnScore))
 
-  const playerTotals = turnScores.map(player => player.reduce((acc, cur) => acc + cur, 0))
-
-  const rows = _.range(0, turnScores[0].length).map(i =>
-    turnScores.map((player, j) => <td key={`score${j}${i}`}>{player.length > i ? player[i] : '-'}</td>)
+  const accumulations = turnScores.map(player => player.reduce((acc, cur) => [...acc, cur !== -1
+    ? acc.length > 0
+      ? acc[acc.length-1]+cur
+      : cur
+    : 0 /* Makin bacon */
+    ], [])
   )
-  const rowDivs = rows.map((row, i) => (
-        <tr key={i}>{row}</tr>
-      ))
-  const totals = playerTotals.map((player, i) => (
-    <td key={`total${i}`}><em>{player}</em></td>
-  ))
+
+  console.log(accumulations)
+
+  const transposed = accumulations[0].map((col, i) =>
+    accumulations.map(row => row[i])
+  )
+
+  const rows = transposed.map((row, i) =>
+    <tr key={`row${i}`}>{row.map((score, j) => <td key={`cell${i}${j}`}>{score}</td>)}</tr>
+  )
+
 
   return (
     <div className="table-responsive">
       <table className="table table-sm table-nonfluid">
         <thead>
-          <tr><th>Kategoria/Joukkue</th>{header}</tr>
+          <tr>{header}</tr>
         </thead>
         <tbody>
-          {rowDivs}
-          <tr>
-            <th>Kokonaispisteet</th>{totals}
-          </tr>
+          {rows}
         </tbody>
       </table>
     </div>
@@ -52,34 +59,16 @@ const ScoreBoard = props => {
 ScoreBoard.propTypes = {
   scores: React.PropTypes.arrayOf(
     React.PropTypes.arrayOf(
-      React.PropTypes.shape({
-        key: React.PropTypes.number,
-        id: React.PropTypes.number,
-        value: React.PropTypes.number
-      })
+      React.PropTypes.number
     )
   ).isRequired,
-  current: React.PropTypes.arrayOf(
-    React.PropTypes.shape({
-      key: React.PropTypes.number,
-      id: React.PropTypes.number,
-      value: React.PropTypes.number
-    })
-  ).isRequired,
-  labels: React.PropTypes.shape({
-    id: React.PropTypes.string,
-    name: React.PropTypes.string,
-    labels: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
-  }),
   players: React.PropTypes.number
 }
 
 function mapStateToProps(state) {
   return {
-    current: state.current,
-    scores: state.scores,
+    scores: state.scoreBoard,
     players: state.players,
-    labels: state.labels
   }
 }
 
