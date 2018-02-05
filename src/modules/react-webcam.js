@@ -215,7 +215,7 @@ export default class Webcam extends Component {
     return (
       <video
         autoPlay
-        playsinline
+        playsInline
         width={this.props.width}
         height={this.props.height}
         src={this.state.src}
