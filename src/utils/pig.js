@@ -4,7 +4,8 @@ const Position = {
   TROTTER: 'TROTTER',
   RAZORBACK: 'RAZORBACK',
   SNOUTER: 'SNOUTER',
-  LEANER: 'LEANER'
+  LEANER: 'LEANER',
+  BACON: 'BACON'
 }
 
 const positionScore = (position) => {

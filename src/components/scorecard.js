@@ -8,6 +8,7 @@ import SubmitButton from './submit'
 import Capture from './capture'
 import Pig from '../utils/pig'
 import * as Actions from '../actions'
+import Api from '../utils/api'
 
 const Scorecard = props => {
   const handleValueChange = (pigId, value) => {
@@ -17,7 +18,13 @@ const Scorecard = props => {
   }
 
   const handleCapture = imageData => 
-    props.setProcessedImage(imageData)
+    Api.detect(imageData)
+      .then((result) => {
+        console.log(result)
+        props.setProcessedImage(result.image)
+        props.setThrow(result.throw)
+      })
+
 
   const handleEndTurn = () => {
     props.addTurn(props.currentTurn.slice())
@@ -54,7 +61,7 @@ const Scorecard = props => {
       <Capture
         processedImage={props.processedImage}
         handleCapture={handleCapture}
-        handleRetake={() => handleCapture(null)}
+        handleRetake={() => props.setProcessedImage(null)}
       />
       <div className="container">
         <div className="row">
@@ -94,7 +101,8 @@ Scorecard.propTypes = {
   currentTurn: React.PropTypes.array,
   scoreBoard: React.PropTypes.array,
   players: React.PropTypes.number,
-  processedImage: React.PropTypes.string
+  processedImage: React.PropTypes.string,
+  setProcessedImage: React.PropTypes.func
 }
 
 function mapStateToProps(state) {

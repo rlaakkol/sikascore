@@ -32,7 +32,7 @@ const App = props => {
       {props.children}
       <Navbar fixedBottom>
         <Navbar.Header>
-          <Link to="/scorecard">
+          <Link to="/app/scorecard">
             <Navbar.Brand>
               SikaScore
             </Navbar.Brand>
@@ -41,19 +41,19 @@ const App = props => {
         </Navbar.Header>
         <Navbar.Collapse>
           <Nav>
-            <LinkContainer to="/scorecard">
+            <LinkContainer to="/app/scorecard">
               <NavItem eventKey={1}>
                 Submit scores
               </NavItem>
             </LinkContainer>
-            <LinkContainer to="/scoreboard">
+            <LinkContainer to="/app/scoreboard">
               <NavItem eventKey={2}>
                 Scoreboard
               </NavItem>
             </LinkContainer>
           </Nav>
           <Nav pullRight>
-            <LinkContainer to="/help">
+            <LinkContainer to="/app/help">
               <NavItem eventKey={3}>
                 Ohjeet
               </NavItem>
