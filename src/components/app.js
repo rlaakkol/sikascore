@@ -59,7 +59,7 @@ const App = props => {
           <Nav pullRight>
             <LinkContainer to="/app/help">
               <NavItem eventKey={3}>
-                Ohjeet
+                Help
               </NavItem>
             </LinkContainer>
             <NavDropdown
@@ -71,7 +71,7 @@ const App = props => {
                 Undo last
               </MenuItem>
               <MenuItem eventKey={'clear'}>
-                Clear scoreboard
+                New game
               </MenuItem>
               <MenuItem eventKey={'players'}>
                 Edit players
