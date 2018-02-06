@@ -8,9 +8,10 @@ import {
   UNDO_LAST_TURN,
   ADD_ALERT,
   REMOVE_ALERT,
-  CHANGE_PLAYER_AMOUNT,
+  CHANGE_PLAYERS,
   SET_PROCESSED_IMAGE,
-  SET_PROCESSING
+  SET_PROCESSING,
+  SHOW_PLAYER_MODAL
 } from '../actions'
 
 const currentThrow = (state = [null, null], action) => {
@@ -48,10 +49,11 @@ const scoreBoard = (state = [], action) => {
   }
 }
 
-const playerAmount = (state = 4, action) => {
+const defaultPlayers = ['1', '2', '3', '4']
+const players = (state = defaultPlayers, action) => {
   switch (action.type) {
-    case CHANGE_PLAYER_AMOUNT:
-      return action.amount
+    case CHANGE_PLAYERS:
+      return action.list
     default:
       return state
   }
@@ -93,4 +95,13 @@ const processingImage = (state = false, action) => {
   }
 }
 
-export { currentThrow, currentTurn, scoreBoard, playerAmount, alerts, processedImage, processingImage }
+const playerModalVisible = (state = false, action) => {
+  switch (action.type) {
+    case SHOW_PLAYER_MODAL:
+      return action.show
+    default:
+      return state
+  }
+}
+
+export { currentThrow, currentTurn, scoreBoard, players, alerts, processedImage, processingImage, playerModalVisible }

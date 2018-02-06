@@ -70,6 +70,11 @@ const Scorecard = props => {
     ? Pig.throwScore(props.currentThrow)
     : 0
   const turnTotal = Pig.turnScore(props.currentTurn)
+  const playerIdx = props.scoreBoard.length % props.players.length
+
+  console.log(props.scoreBoard.length)
+  console.log(props.players.length)
+  console.log(playerIdx)
   return (
     <div>
       <div className="container-fluid">
@@ -81,7 +86,7 @@ const Scorecard = props => {
             />
         <div className="row">
           <div className="col-md-12">
-            <strong>Player {props.scoreBoard.length % props.players + 1}</strong>
+            <strong>Player {playerIdx + 1}:</strong> {props.players[playerIdx]}
           </div>
         </div>
         <div className="h-divider" />
@@ -118,7 +123,7 @@ Scorecard.propTypes = {
   currentThrow: React.PropTypes.array,
   currentTurn: React.PropTypes.array,
   scoreBoard: React.PropTypes.array,
-  players: React.PropTypes.number,
+  players: React.PropTypes.array,
   processedImage: React.PropTypes.string,
   setProcessedImage: React.PropTypes.func,
   processingImage: React.PropTypes.bool

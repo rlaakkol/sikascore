@@ -5,11 +5,12 @@ export const NEW_TURN = 'NEW_TURN'
 export const UNDO_THROW = 'UNDO_THROW'
 export const CLEAR_TURNS = 'CLEAR_TURNS'
 export const UNDO_LAST_TURN = 'UNDO_LAST_TURN'
-export const CHANGE_PLAYER_AMOUNT = 'CHANGE_PLAYER_AMOUNT'
+export const CHANGE_PLAYERS = 'CHANGE_PLAYERS'
 export const ADD_ALERT = 'ADD_ALERT'
 export const REMOVE_ALERT = 'REMOVE_ALERT'
 export const SET_PROCESSED_IMAGE = 'SET_PROCESSED_IMAGE'
 export const SET_PROCESSING = 'SET_PROCESSING'
+export const SHOW_PLAYER_MODAL = 'SHOW_PLAYER_MODAL'
 
 /*
  * action creators
@@ -43,8 +44,8 @@ export function undoLastTurn() {
   return { type: UNDO_LAST_TURN }
 }
 
-export function changePlayerAmount() {
-  return { type: CHANGE_PLAYER_AMOUNT }
+export function changePlayers(list) {
+  return { type: CHANGE_PLAYERS, list }
 }
 
 export function addAlert(text, style, id) {
@@ -74,5 +75,12 @@ export function setProcessing(isProcessing) {
   return {
     type: SET_PROCESSING,
     isProcessing
+  }
+}
+
+export function showPlayerModal(show) {
+  return {
+    type: SHOW_PLAYER_MODAL,
+    show
   }
 }

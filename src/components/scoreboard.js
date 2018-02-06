@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import _ from 'lodash'
 
 import Pig from '../utils/pig'
 
@@ -8,17 +7,17 @@ const ScoreBoard = props => {
 
   console.log(props.scores)
   console.log(props.scores.map(turn => turn.map(Pig.throwScore)))
-  const header = _.range(0, props.players).map(i => (
+  const header = props.players.map((player, i) => (
     <th key={i}>
-      Player {i + 1}
+      {player}
     </th>
   ))
   const playerturns = []
-  for (let i = 0; i < props.players; i++) {
+  for (let i = 0; i < props.players.length; i++) {
     playerturns.push([])
   }
   for (let i = 0; i < props.scores.length; i++) {
-    playerturns[i % props.players].push(props.scores[i])
+    playerturns[i % props.players.length].push(props.scores[i])
   }
 
   const turnScores = playerturns.map(player => player.map(Pig.turnScore))
