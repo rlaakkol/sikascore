@@ -33,7 +33,7 @@ class PlayerModal extends React.Component {
 
   render() {
     return (
-      <Modal show={this.props.visible}>
+      <Modal show={this.props.visible} onHide={this.handleCancel}>
         <form onSubmit={this.handleSubmit}>
           <Modal.Header>
             <Modal.Title>Players</Modal.Title>
@@ -41,7 +41,7 @@ class PlayerModal extends React.Component {
 
           <Modal.Body>
             Separate with newline
-            <textarea value={this.state.text} onChange={this.handleChange}/>
+            <textarea rows="6" value={this.state.text} onChange={this.handleChange}/>
           </Modal.Body>
 
           <Modal.Footer>
