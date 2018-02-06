@@ -17,14 +17,22 @@ const Scorecard = props => {
     props.setThrow(theThrow)
   }
 
-  const handleCapture = imageData => 
+  const handleCapture = (imageData) => {
+    props.setProcessing(true)
+    props.setProcessedImage(imageData)
     Api.detect(imageData)
       .then((result) => {
         console.log(result)
         props.setProcessedImage(result.image)
         props.setThrow(result.throw)
+        props.setProcessing(false)
       })
-
+      .catch(() => {
+        setTimeout(() =>
+          props.setProcessing(false)
+          , 1000)
+      })
+  }
 
   const handleEndTurn = () => {
     props.addTurn(props.currentTurn.slice())
@@ -38,18 +46,24 @@ const Scorecard = props => {
     { label: 'Trotter', value: Pig.Position.TROTTER },
     { label: 'Razorback', value: Pig.Position.RAZORBACK },
     { label: 'Snouter', value: Pig.Position.SNOUTER },
-    { label: 'Leaning Jowler', value: Pig.Position.LEANER }
+    { label: 'Leaning Jowler', value: Pig.Position.LEANER },
+    { label: 'Makin Bacon', value: Pig.Position.BACON }
   ]
 
+  const labelcolors = ['blue', 'red']
   const pickers = [0, 1]
     .map((i) => (
-      <PigPicker
-        id={i}
-        label={`Pig ${i+1}`}
-        buttons={buttons}
-        value={props.currentThrow[i]}
-        handleValueChange={handleValueChange}
-      />
+      <div>
+        <PigPicker
+          id={i}
+          label={`Pig ${i+1}`}
+          labelColor={labelcolors[i]}
+          buttons={buttons}
+          value={props.currentThrow[i]}
+          handleValueChange={handleValueChange}
+        />
+        <div className="h-divider" />
+      </div>
     ))
 
   const current = props.currentThrow[0] != null && props.currentThrow[1] != null
@@ -58,15 +72,16 @@ const Scorecard = props => {
   const turnTotal = Pig.turnScore(props.currentTurn)
   return (
     <div>
-      <Capture
-        processedImage={props.processedImage}
-        handleCapture={handleCapture}
-        handleRetake={() => props.setProcessedImage(null)}
-      />
-      <div className="container">
+      <div className="container-fluid">
+            <Capture
+              processedImage={props.processedImage}
+              handleCapture={handleCapture}
+              handleRetake={() => props.setProcessedImage(null)}
+              isProcessing={props.processingImage}
+            />
         <div className="row">
-          <div className="col-lg-12">
-            <strong>{props.scoreBoard.length % props.players + 1}</strong>
+          <div className="col-md-12">
+            <strong>Player {props.scoreBoard.length % props.players + 1}</strong>
           </div>
         </div>
         <div className="h-divider" />
@@ -74,7 +89,10 @@ const Scorecard = props => {
         <div className="h-divider" />
         <div className="row">
           <div className="col-md-6">
-            <strong>Kokonaispisteet:</strong> {current} {turnTotal}
+            <strong>This throw:</strong> {current}
+          </div>
+          <div className="col-md-6">
+            <strong>This turn:</strong> {turnTotal}
           </div>
         </div>
       </div>
@@ -102,7 +120,8 @@ Scorecard.propTypes = {
   scoreBoard: React.PropTypes.array,
   players: React.PropTypes.number,
   processedImage: React.PropTypes.string,
-  setProcessedImage: React.PropTypes.func
+  setProcessedImage: React.PropTypes.func,
+  processingImage: React.PropTypes.bool
 }
 
 function mapStateToProps(state) {
@@ -111,7 +130,8 @@ function mapStateToProps(state) {
     currentTurn: state.currentTurn,
     players: state.players,
     scoreBoard: state.scoreBoard,
-    processedImage: state.processedImage
+    processedImage: state.processedImage,
+    processingImage: state.processingImage
   }
 }
 
@@ -123,7 +143,8 @@ function mapDispatchToProps(dispatch) {
       updateCurrent: Actions.updateCurrent,
       newTurn: Actions.newTurn,
       addTurn: Actions.addTurn,
-      setProcessedImage: Actions.setProcessedImage
+      setProcessedImage: Actions.setProcessedImage,
+      setProcessing: Actions.setProcessing
     },
     dispatch
   )

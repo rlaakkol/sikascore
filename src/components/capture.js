@@ -19,36 +19,51 @@ class Capture extends React.Component {
 
   render() {
 
-    const button = this.props.processedImage ?
+    const buttonStyle = {
+      width: '100%',
+      height: 'auto',
+      margin: 'auto'
+    }
+
+    const objectStyle = {
+      objectFit: 'contain',
+      margin: 'auto'
+    }
+
+    const button = this.props.processedImage && !this.props.isProcessing ?
       <Button
         onClick={this.props.handleRetake}
+        className="btn-danger"
+        style={buttonStyle}
       >
         Again?
       </Button> :
       <Button
         onClick={this.capture}
+        className="btn-success"
+        style={buttonStyle}
+        disabled={this.props.isProcessing}
       >
-        Capture
+        Capture {this.props.isProcessing ? <i className="fa fa-spinner fa-spin" /> : ''}
       </Button>
 
     return (
-      <div className="container">
         <div className="row">
-          <div className="col-lg-12">
+          <div className="col-md-6">
             {!this.props.processedImage ?
             <Webcam
               audio={false}
               ref={node => (this.webcam = node)}
               screenshotFormat="image/jpeg"
+              width='400'
+              height='400'
+              style={objectStyle}
             /> :
-            <img src={this.props.processedImage} alt="processed"/>}
+            <img src={this.props.processedImage} alt="processed" width='400' height='400' style={objectStyle}/>}
           </div>
-        </div>
-        <div className="row">
-          <div className="col-lg-2 col-offset-lf-5">
+          <div className="col-sm-2 col-sm-offset-2">
             {button}
           </div>
-        </div>
       </div>)
   }
 }
@@ -56,7 +71,8 @@ class Capture extends React.Component {
 Capture.propTypes = {
   handleCapture: PropTypes.func,
   handleRetake: PropTypes.func,
-  processedImage: PropTypes.string
+  processedImage: PropTypes.string,
+  isProcessing: PropTypes.bool
 }
 
 export default Capture

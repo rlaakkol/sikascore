@@ -20,6 +20,8 @@ const positionScore = (position) => {
       return 10
     case Position.LEANER:
       return 15
+    case Position.BACON:
+      return -1
     default:
       return 0
   }
@@ -32,7 +34,7 @@ const throwScore = (theThrow) => {
 
 const turnScore = throws =>
   throws.length > 0
-    ? throws[throws.length - 1] !== -1
+    ? throwScore(throws[throws.length - 1]) > -1
       ? throws.
           map(throwScore).
           reduce((acc, cur) => cur < 1 ? 0 : acc + cur)

@@ -9,7 +9,7 @@ import * as Actions from '../actions'
 
 const SubmitButton = props => {
   if (props.currentTurn.length > 0
-      && Pig.throwScore(props.currentTurn[props.currentTurn.length - 1]) === 0) {
+    && Pig.throwScore(props.currentTurn[props.currentTurn.length - 1]) <= 0) {
     props.addTurn(props.currentTurn.slice())
     props.newTurn()
   }
@@ -20,6 +20,7 @@ const SubmitButton = props => {
     props.addAlert('Saved', 'alert alert-success', id)
     setTimeout(() => props.removeAlert(id), 2000)
     props.setThrow([null, null])
+    props.setProcessedImage(null)
   }
   const disabled = props.currentThrow[0] === null || props.currentThrow[1] === null
   return (
@@ -50,7 +51,8 @@ function mapDispatchToProps(dispatch) {
       setThrow: Actions.setThrow,
       updateCurrent: Actions.updateCurrent,
       newTurn: Actions.newTurn,
-      addTurn: Actions.addTurn
+      addTurn: Actions.addTurn,
+      setProcessedImage: Actions.setProcessedImage
     },
     dispatch
   )
@@ -84,6 +86,7 @@ SubmitButton.propTypes = {
   addTurn: React.PropTypes.func,
   updateCurrent: React.PropTypes.func,
   newTurn: React.PropTypes.func,
+  setProcessedImage: React.PropTypes.func,
   currentThrow: React.PropTypes.array,
   currentTurn: React.PropTypes.array
 }

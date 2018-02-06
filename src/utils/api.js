@@ -28,6 +28,8 @@ const mapToPosition = (pig) => {
       return Pig.Position.SNOUTER
     case 'leaning_jowler':
       return Pig.Position.LEANER
+    case 'bacon':
+      return Pig.Position.BACON
     default:
       return null
   }

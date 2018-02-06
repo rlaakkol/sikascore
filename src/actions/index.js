@@ -9,6 +9,7 @@ export const CHANGE_PLAYER_AMOUNT = 'CHANGE_PLAYER_AMOUNT'
 export const ADD_ALERT = 'ADD_ALERT'
 export const REMOVE_ALERT = 'REMOVE_ALERT'
 export const SET_PROCESSED_IMAGE = 'SET_PROCESSED_IMAGE'
+export const SET_PROCESSING = 'SET_PROCESSING'
 
 /*
  * action creators
@@ -66,5 +67,12 @@ export function setProcessedImage(imageData) {
   return {
     type: SET_PROCESSED_IMAGE,
     imageData
+  }
+}
+
+export function setProcessing(isProcessing) {
+  return {
+    type: SET_PROCESSING,
+    isProcessing
   }
 }

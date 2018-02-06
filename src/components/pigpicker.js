@@ -1,11 +1,10 @@
 import React from 'react'
-import { Button, ButtonGroup, ControlLabel } from 'react-bootstrap'
+import { Button, ControlLabel } from 'react-bootstrap'
 
 const PigPicker = props => {
   const handleChange = value => props.handleValueChange(props.id, value)
 
   const buttons = props.buttons.map(btnprops => (
-    <ButtonGroup key={`row${props.id.toString()}btn${btnprops.value.toString()}`}>
       <Button
         className={`button${btnprops.value.toString()}`}
         bsSize="large"
@@ -15,22 +14,29 @@ const PigPicker = props => {
       >
         {btnprops.label}
       </Button>
-    </ButtonGroup>
   ))
 
+  const flexButtons = {
+    display: 'flex',
+    flexWrap: 'wrap'
+  }
+
+  const labelStyle = {
+    borderStyle: 'solid',
+    borderColor: props.labelColor
+  }
+
   return (
-    <div className="row equal">
-      <div className="col-lg-4 rowlabel">
+    <div className="row">
+      <div className="col-xs-2 rowlabel">
         <form onSubmit={event => event.preventDefault()}>
-          <ControlLabel>
+          <ControlLabel style={labelStyle}>
             {props.label}
           </ControlLabel>
         </form>
       </div>
-      <div className="col-lg-8">
-        <ButtonGroup justified>
-          {buttons}
-        </ButtonGroup>
+      <div className="col-xs-10" style={flexButtons}>
+        {buttons}
       </div>
     </div>
   )
@@ -38,6 +44,7 @@ const PigPicker = props => {
 
 PigPicker.propTypes = {
   label: React.PropTypes.string.isRequired,
+  labelColor: React.PropTypes.string.isRequired,
   id: React.PropTypes.number.isRequired,
   value: React.PropTypes.string,
   handleValueChange: React.PropTypes.func.isRequired,
