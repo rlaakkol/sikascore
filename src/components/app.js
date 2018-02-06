@@ -11,6 +11,8 @@ import Alert from './alert'
 
 import PlayerModal from './players'
 
+import Api from '../utils/api'
+
 const App = props => {
   const handleDropdownAction = key => {
     switch (key) {
@@ -19,6 +21,7 @@ const App = props => {
         break
       case 'clear':
         props.clearTurns()
+        Api.resetGameId()
         break
       case 'players':
         props.showPlayerModal(true)

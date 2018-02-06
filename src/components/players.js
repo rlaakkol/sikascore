@@ -22,7 +22,6 @@ class PlayerModal extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    console.log('submit pressed')
     this.props.changePlayers(this.state.text)
   }
 

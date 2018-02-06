@@ -5,8 +5,6 @@ import Pig from '../utils/pig'
 
 const ScoreBoard = props => {
 
-  console.log(props.scores)
-  console.log(props.scores.map(turn => turn.map(Pig.throwScore)))
   const header = props.players.map((player, i) => (
     <th key={i}>
       {player}
@@ -29,8 +27,6 @@ const ScoreBoard = props => {
     : 0 /* Makin bacon */
     ], [])
   )
-
-  console.log(accumulations)
 
   const transposed = accumulations[0].map((col, i) =>
     accumulations.map(row => row[i])

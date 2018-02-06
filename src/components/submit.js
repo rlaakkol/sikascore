@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import uuid from 'node-uuid'
 import { Button } from 'react-bootstrap'
 
 import Pig from '../utils/pig'
@@ -16,9 +15,6 @@ const SubmitButton = props => {
 
   const handleClick = () => {
     props.addThrow(props.currentThrow.slice())
-    const id = uuid()
-    props.addAlert('Saved', 'alert alert-success', id)
-    setTimeout(() => props.removeAlert(id), 2000)
     props.setThrow([null, null])
     props.setProcessedImage(null)
   }

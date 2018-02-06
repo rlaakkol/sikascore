@@ -22,7 +22,6 @@ const Scorecard = props => {
     props.setProcessedImage(imageData)
     Api.detect(imageData)
       .then((result) => {
-        console.log(result)
         props.setProcessedImage(result.image)
         props.setThrow(result.throw)
         props.setProcessing(false)
@@ -72,9 +71,6 @@ const Scorecard = props => {
   const turnTotal = Pig.turnScore(props.currentTurn)
   const playerIdx = props.scoreBoard.length % props.players.length
 
-  console.log(props.scoreBoard.length)
-  console.log(props.players.length)
-  console.log(playerIdx)
   return (
     <div>
       <div className="container-fluid">

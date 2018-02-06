@@ -4,6 +4,8 @@ import { Button } from 'react-bootstrap'
 
 import Webcam from '../modules/react-webcam'
 
+const imageSize = '300'
+
 class Capture extends React.Component {
 
   constructor(props) {
@@ -55,11 +57,17 @@ class Capture extends React.Component {
               audio={false}
               ref={node => (this.webcam = node)}
               screenshotFormat="image/jpeg"
-              width='400'
-              height='400'
+              width={imageSize}
+              height={imageSize}
               style={objectStyle}
             /> :
-            <img src={this.props.processedImage} alt="processed" width='400' height='400' style={objectStyle}/>}
+                <img
+                  src={this.props.processedImage}
+                  alt="processed"
+                  width={imageSize}
+                  height={imageSize}
+                  style={objectStyle}
+                />}
           </div>
           <div className="col-sm-2 col-sm-offset-2">
             {button}

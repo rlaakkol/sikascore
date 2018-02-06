@@ -1,6 +1,9 @@
+import uuid from 'uuid/v4'
+
 import Pig from './pig'
 
 const PREDICT_URI = '/api/predict'
+const SCORES_URI = '/api/submit_scores'
 
 function dataURLtoBlob(dataurl) {
   const arr = dataurl.split(',')
@@ -13,6 +16,19 @@ function dataURLtoBlob(dataurl) {
     }
     return new Blob([u8arr], {type:mime})
 }
+
+const resetGameId = () => {
+  const id = uuid()
+  localStorage.setItem('sika-gameid', id)
+  return id
+}
+
+const currentGameId = () => {
+  const id = localStorage.getItem('sika-gameid')
+  if (id === null) return resetGameId()
+  return id
+}
+
 
 const mapToPosition = (pig) => {
   switch (pig) {
@@ -40,13 +56,18 @@ const detect = (image) => {
   data.append('file', dataURLtoBlob(image), 'filename.png')
   return fetch(PREDICT_URI, { method: 'POST', body: data })
     .then(response => response.json())
-    .then((resp) => {
-      console.log(resp)
-      return {
+    .then(resp => (
+      {
         image: `/${resp.img_url}`,
         throw: [mapToPosition(resp.pig1), mapToPosition(resp.pig2)]
       }
-    })
+    ))
 }
 
-export default { detect, mapToPosition }
+const submitScores = (players, turns) =>
+  fetch(`${SCORES_URI}/${currentGameId()}`, {
+    method: 'PUT',
+    body: { players, turns }
+  })
+
+export default { detect, submitScores, resetGameId }
