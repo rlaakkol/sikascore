@@ -23,12 +23,17 @@ const resetGameId = () => {
   return id
 }
 
+const unsetGameId = () =>
+  localStorage.setItem('sika-gameid', null)
+
 const currentGameId = () => {
   const id = localStorage.getItem('sika-gameid')
   if (id === null) return resetGameId()
   return id
 }
 
+const gameIdIsSet = () =>
+  localStorage.getItem('sika-gameid') !== null
 
 const mapToPosition = (pig) => {
   switch (pig) {
@@ -67,7 +72,10 @@ const detect = (image) => {
 const submitScores = (players, turns) =>
   fetch(`${SCORES_URI}/${currentGameId()}`, {
     method: 'PUT',
-    body: { players, turns }
+    headers: new Headers({
+      'Content-Type': 'application/json'
+    }),
+    body: JSON.stringify({ players, turns, totals: Pig.scoreAccumulations(players, turns) })
   })
 
-export default { detect, submitScores, resetGameId }
+export default { detect, submitScores, resetGameId, unsetGameId, gameIdIsSet }

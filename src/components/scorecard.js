@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Button } from 'react-bootstrap'
@@ -52,7 +53,7 @@ const Scorecard = props => {
   const labelcolors = ['blue', 'red']
   const pickers = [0, 1]
     .map((i) => (
-      <div>
+      <div key={`pickerdiv-${i}`}>
         <PigPicker
           id={i}
           label={`Pig ${i+1}`}
@@ -116,13 +117,13 @@ const Scorecard = props => {
 }
 
 Scorecard.propTypes = {
-  currentThrow: React.PropTypes.array,
-  currentTurn: React.PropTypes.array,
-  scoreBoard: React.PropTypes.array,
-  players: React.PropTypes.array,
-  processedImage: React.PropTypes.string,
-  setProcessedImage: React.PropTypes.func,
-  processingImage: React.PropTypes.bool
+  currentThrow: PropTypes.array,
+  currentTurn: PropTypes.array,
+  scoreBoard: PropTypes.array,
+  players: PropTypes.array,
+  processedImage: PropTypes.string,
+  setProcessedImage: PropTypes.func,
+  processingImage: PropTypes.bool
 }
 
 function mapStateToProps(state) {

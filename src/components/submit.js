@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Button } from 'react-bootstrap'
@@ -6,28 +7,40 @@ import { Button } from 'react-bootstrap'
 import Pig from '../utils/pig'
 import * as Actions from '../actions'
 
-const SubmitButton = props => {
-  if (props.currentTurn.length > 0
-    && Pig.throwScore(props.currentTurn[props.currentTurn.length - 1]) <= 0) {
-    props.addTurn(props.currentTurn.slice())
-    props.newTurn()
+class SubmitButton extends React.Component {
+
+  constructor(props) {
+    super(props)
+
+    this.handleClick = this.handleClick.bind(this)
   }
 
-  const handleClick = () => {
-    props.addThrow(props.currentThrow.slice())
-    props.setThrow([null, null])
-    props.setProcessedImage(null)
+  componentWillMount() {
+    if (this.props.currentTurn.length > 0
+      && Pig.throwScore(this.props.currentTurn[this.props.currentTurn.length - 1]) <= 0) {
+      this.props.addTurn(this.props.currentTurn.slice())
+      this.props.newTurn()
+    }
   }
-  const disabled = props.currentThrow[0] === null || props.currentThrow[1] === null
-  return (
-    <Button
-      className={props.className}
-      onClick={handleClick}
-      disabled={disabled}
-    >
-      {props.children}
-    </Button>
-  )
+
+  handleClick() {
+    this.props.addThrow(this.props.currentThrow.slice())
+    this.props.setThrow([null, null])
+    this.props.setProcessedImage(null)
+  }
+
+  render() {
+    const disabled = this.props.currentThrow[0] === null || this.props.currentThrow[1] === null
+    return (
+      <Button
+        className={this.props.className}
+        onClick={this.handleClick}
+        disabled={disabled}
+      >
+        {this.props.children}
+      </Button>
+    )
+  }
 }
 
 function mapStateToProps(state) {
@@ -40,7 +53,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      addScore: Actions.addScore,
       addAlert: Actions.addAlert,
       removeAlert: Actions.removeAlert,
       addThrow: Actions.updateCurrent,
@@ -55,36 +67,18 @@ function mapDispatchToProps(dispatch) {
 }
 
 SubmitButton.propTypes = {
-  nextPage: React.PropTypes.string,
-  rows: React.PropTypes.arrayOf(
-    React.PropTypes.shape({
-      key: React.PropTypes.number,
-      id: React.PropTypes.number,
-      value: React.PropTypes.number
-    })
-  ).isRequired,
-  history: React.PropTypes.arrayOf(
-    React.PropTypes.arrayOf(
-      React.PropTypes.shape({
-        key: React.PropTypes.number,
-        id: React.PropTypes.number,
-        value: React.PropTypes.number
-      })
-    )
-  ).isRequired,
-  addScore: React.PropTypes.func.isRequired,
-  removeAlert: React.PropTypes.func.isRequired,
-  addAlert: React.PropTypes.func.isRequired,
-  children: React.PropTypes.string.isRequired,
-  className: React.PropTypes.string.isRequired,
-  addThrow: React.PropTypes.func,
-  setThrow: React.PropTypes.func,
-  addTurn: React.PropTypes.func,
-  updateCurrent: React.PropTypes.func,
-  newTurn: React.PropTypes.func,
-  setProcessedImage: React.PropTypes.func,
-  currentThrow: React.PropTypes.array,
-  currentTurn: React.PropTypes.array
+  removeAlert: PropTypes.func.isRequired,
+  addAlert: PropTypes.func.isRequired,
+  children: PropTypes.string.isRequired,
+  className: PropTypes.string.isRequired,
+  addThrow: PropTypes.func,
+  setThrow: PropTypes.func,
+  addTurn: PropTypes.func,
+  updateCurrent: PropTypes.func,
+  newTurn: PropTypes.func,
+  setProcessedImage: PropTypes.func,
+  currentThrow: PropTypes.array,
+  currentTurn: PropTypes.array
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SubmitButton)

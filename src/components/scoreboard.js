@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import Pig from '../utils/pig'
@@ -10,27 +11,14 @@ const ScoreBoard = props => {
       {player}
     </th>
   ))
-  const playerturns = []
-  for (let i = 0; i < props.players.length; i++) {
-    playerturns.push([])
-  }
-  for (let i = 0; i < props.scores.length; i++) {
-    playerturns[i % props.players.length].push(props.scores[i])
-  }
 
-  const turnScores = playerturns.map(player => player.map(Pig.turnScore))
+  const accumulations = Pig.scoreAccumulations(props.players, props.scores)
 
-  const accumulations = turnScores.map(player => player.reduce((acc, cur) => [...acc, cur !== -1
-    ? acc.length > 0
-      ? acc[acc.length-1]+cur
-      : cur
-    : 0 /* Makin bacon */
-    ], [])
-  )
-
-  const transposed = accumulations[0].map((col, i) =>
-    accumulations.map(row => row[i])
-  )
+  const transposed = accumulations.length > 0
+    ? accumulations[0].map((col, i) =>
+      accumulations.map(row => row[i])
+    )
+    : []
 
   const rows = transposed.map((row, i) =>
     <tr key={`row${i}`}>{row.map((score, j) => <td key={`cell${i}${j}`}>{score}</td>)}</tr>
@@ -52,12 +40,12 @@ const ScoreBoard = props => {
 }
 
 ScoreBoard.propTypes = {
-  scores: React.PropTypes.arrayOf(
-    React.PropTypes.arrayOf(
-      React.PropTypes.number
-    )
+  scores: PropTypes.arrayOf(
+    PropTypes.array
   ).isRequired,
-  players: React.PropTypes.number
+  players: PropTypes.arrayOf(
+    PropTypes.string
+  )
 }
 
 function mapStateToProps(state) {

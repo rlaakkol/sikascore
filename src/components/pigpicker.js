@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Button, ControlLabel } from 'react-bootstrap'
 
 const PigPicker = props => {
@@ -11,6 +12,7 @@ const PigPicker = props => {
         bsStyle="default"
         active={props.value === btnprops.value}
         onClick={() => handleChange(btnprops.value)}
+        key={`button${btnprops.value.toString()}`}
       >
         {btnprops.label}
       </Button>
@@ -43,12 +45,12 @@ const PigPicker = props => {
 }
 
 PigPicker.propTypes = {
-  label: React.PropTypes.string.isRequired,
-  labelColor: React.PropTypes.string.isRequired,
-  id: React.PropTypes.number.isRequired,
-  value: React.PropTypes.string,
-  handleValueChange: React.PropTypes.func.isRequired,
-  buttons: React.PropTypes.array
+  label: PropTypes.string.isRequired,
+  labelColor: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
+  value: PropTypes.string,
+  handleValueChange: PropTypes.func.isRequired,
+  buttons: PropTypes.array
 }
 
 export default PigPicker

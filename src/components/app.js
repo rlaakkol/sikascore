@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Link } from 'react-router'
@@ -14,14 +15,19 @@ import PlayerModal from './players'
 import Api from '../utils/api'
 
 const App = props => {
+
+  if (!Api.gameIdIsSet()) props.showPlayerModal(true)
+
   const handleDropdownAction = key => {
     switch (key) {
       case 'cancel':
         props.undoLastTurn()
         break
       case 'clear':
-        props.clearTurns()
+        Api.submitScores(props.players, props.scoreBoard)
         Api.resetGameId()
+        props.clearTurns()
+        props.showPlayerModal(true)
         break
       case 'players':
         props.showPlayerModal(true)
@@ -88,6 +94,7 @@ const App = props => {
         changePlayers={(text) => {
           props.changePlayers(text.split('\n'))
           props.showPlayerModal(false)
+          if (!Api.gameIdIsSet) Api.resetGameId()
         }}
         visible={props.playerModalVisible}
         toggle={() => props.showPlayerModal(!props.playerModalVisible)}
@@ -97,14 +104,15 @@ const App = props => {
 }
 
 App.propTypes = {
-  undoLastTurn: React.PropTypes.func,
-  clearTurns: React.PropTypes.func,
-  alerts: React.PropTypes.array,
-  children: React.PropTypes.element,
-  showPlayerModal: React.PropTypes.func,
-  players: React.PropTypes.array,
-  changePlayers: React.PropTypes.func,
-  playerModalVisible: React.PropTypes.bool
+  undoLastTurn: PropTypes.func,
+  clearTurns: PropTypes.func,
+  alerts: PropTypes.array,
+  children: PropTypes.element,
+  showPlayerModal: PropTypes.func,
+  players: PropTypes.array,
+  changePlayers: PropTypes.func,
+  playerModalVisible: PropTypes.bool,
+  scoreBoard: PropTypes.array
 }
 
 
@@ -113,6 +121,7 @@ function mapStateToProps(state) {
   return {
     alerts: state.alerts,
     players: state.players,
+    scoreBoard: state.scoreBoard,
     playerModalVisible: state.playerModalVisible
   }
 }

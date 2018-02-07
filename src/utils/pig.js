@@ -41,4 +41,25 @@ const turnScore = throws =>
       : -1 /* Makin bacon */
   : 0
 
-export default { Position, throwScore, turnScore }
+const scoreAccumulations = (players, turns) => {
+  const playerturns = []
+  for (let i = 0; i < turns.length; i++) {
+    playerturns.push([])
+  }
+  for (let i = 0; i < turns.length; i++) {
+    playerturns[i % players.length].push(turns[i])
+  }
+
+  const turnScores = playerturns.map(player => player.map(turnScore))
+
+  const accumulations = turnScores.map(player => player.reduce((acc, cur) => [...acc, cur !== -1
+    ? acc.length > 0
+      ? acc[acc.length-1]+cur
+      : cur
+    : 0 /* Makin bacon */
+    ], [])
+  )
+  return accumulations
+}
+
+export default { Position, throwScore, turnScore, scoreAccumulations }

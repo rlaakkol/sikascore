@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const Alerts = props => {
   const { alerts, children } = props
@@ -14,14 +15,14 @@ const Alerts = props => {
 }
 
 Alerts.propTypes = {
-  alerts: React.PropTypes.arrayOf(
-    React.PropTypes.shape({
-      text: React.PropTypes.string,
-      style: React.PropTypes.string,
-      id: React.PropTypes.string
+  alerts: PropTypes.arrayOf(
+    PropTypes.shape({
+      text: PropTypes.string,
+      style: PropTypes.string,
+      id: PropTypes.string
     })
   ).isRequired,
-  children: React.PropTypes.element.isRequired
+  children: PropTypes.element.isRequired
 }
 
 export default Alerts
