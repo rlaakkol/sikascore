@@ -80,7 +80,7 @@ const alerts = (state = [], action) => {
 const processedImage = (state = null, action) => {
   switch (action.type) {
     case SET_PROCESSED_IMAGE:
-      return action.imageData
+      return action.image
     default:
       return state
   }

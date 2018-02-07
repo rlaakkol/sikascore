@@ -6,6 +6,7 @@ import { Button } from 'react-bootstrap'
 
 import Pig from '../utils/pig'
 import * as Actions from '../actions'
+import Api from '../utils/api'
 
 class SubmitButton extends React.Component {
 
@@ -24,7 +25,11 @@ class SubmitButton extends React.Component {
   }
 
   handleClick() {
-    this.props.addThrow(this.props.currentThrow.slice())
+    const theThrow = this.props.currentThrow
+    this.props.addThrow(theThrow.slice())
+    if (this.processedImage && this.processedImage.uuid) {
+      Api.verify(this.props.processedImage.uuid, theThrow[0], theThrow[1])
+    }
     this.props.setThrow([null, null])
     this.props.setProcessedImage(null)
   }
@@ -46,7 +51,8 @@ class SubmitButton extends React.Component {
 function mapStateToProps(state) {
   return {
     currentThrow: state.currentThrow,
-    currentTurn: state.currentTurn
+    currentTurn: state.currentTurn,
+    processedImage: state.processedImage
   }
 }
 
@@ -78,7 +84,11 @@ SubmitButton.propTypes = {
   newTurn: PropTypes.func,
   setProcessedImage: PropTypes.func,
   currentThrow: PropTypes.array,
-  currentTurn: PropTypes.array
+  currentTurn: PropTypes.array,
+  processedImage: PropTypes.shape({
+    uuid: PropTypes.string,
+    data: PropTypes.string
+  })
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SubmitButton)

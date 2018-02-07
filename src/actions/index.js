@@ -64,10 +64,10 @@ export function removeAlert(id) {
   }
 }
 
-export function setProcessedImage(imageData) {
+export function setProcessedImage(uuid, data) {
   return {
     type: SET_PROCESSED_IMAGE,
-    imageData
+    image: { uuid, data }
   }
 }
 

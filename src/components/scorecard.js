@@ -20,10 +20,10 @@ const Scorecard = props => {
 
   const handleCapture = (imageData) => {
     props.setProcessing(true)
-    props.setProcessedImage(imageData)
+    props.setProcessedImage(null, imageData)
     Api.detect(imageData)
       .then((result) => {
-        props.setProcessedImage(result.image)
+        props.setProcessedImage(result.uuid, result.image)
         props.setThrow(result.throw)
         props.setProcessing(false)
       })
@@ -72,11 +72,13 @@ const Scorecard = props => {
   const turnTotal = Pig.turnScore(props.currentTurn)
   const playerIdx = props.scoreBoard.length % props.players.length
 
+  const image = props.processedImage !== null ? props.processedImage.data : null
+
   return (
     <div>
       <div className="container-fluid">
             <Capture
-              processedImage={props.processedImage}
+              processedImage={image}
               handleCapture={handleCapture}
               handleRetake={() => props.setProcessedImage(null)}
               isProcessing={props.processingImage}
@@ -121,7 +123,10 @@ Scorecard.propTypes = {
   currentTurn: PropTypes.array,
   scoreBoard: PropTypes.array,
   players: PropTypes.array,
-  processedImage: PropTypes.string,
+  processedImage: PropTypes.shape({
+    uuid: PropTypes.string,
+    data: PropTypes.string
+  }),
   setProcessedImage: PropTypes.func,
   processingImage: PropTypes.bool
 }
