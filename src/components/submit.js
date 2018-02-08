@@ -8,44 +8,32 @@ import Pig from '../utils/pig'
 import * as Actions from '../actions'
 import Api from '../utils/api'
 
-class SubmitButton extends React.Component {
+const SubmitButton = (props) => {
 
-  constructor(props) {
-    super(props)
-
-    this.handleClick = this.handleClick.bind(this)
-  }
-
-  componentWillMount() {
-    if (this.props.currentTurn.length > 0
-      && Pig.throwScore(this.props.currentTurn[this.props.currentTurn.length - 1]) <= 0) {
-      this.props.addTurn(this.props.currentTurn.slice())
-      this.props.newTurn()
+  const handleClick = () => {
+    const theThrow = props.currentThrow
+    props.addThrow(theThrow.slice())
+    if (props.processedImage && props.processedImage.uuid) {
+      Api.verify(props.processedImage.uuid, theThrow[0], theThrow[1])
     }
-  }
-
-  handleClick() {
-    const theThrow = this.props.currentThrow
-    this.props.addThrow(theThrow.slice())
-    if (this.processedImage && this.processedImage.uuid) {
-      Api.verify(this.props.processedImage.uuid, theThrow[0], theThrow[1])
+    if (Pig.throwScore(theThrow) <= 0) {
+      props.addTurn(props.currentTurn.concat([theThrow]))
+      props.newTurn()
     }
-    this.props.setThrow([null, null])
-    this.props.setProcessedImage(null)
+    props.setThrow([null, null])
+    props.setProcessedImage(null)
   }
 
-  render() {
-    const disabled = this.props.currentThrow[0] === null || this.props.currentThrow[1] === null
-    return (
-      <Button
-        className={this.props.className}
-        onClick={this.handleClick}
-        disabled={disabled}
-      >
-        {this.props.children}
-      </Button>
-    )
-  }
+  const disabled = props.currentThrow[0] === null || props.currentThrow[1] === null
+  return (
+    <Button
+      className={props.className}
+      onClick={handleClick}
+      disabled={disabled}
+    >
+      {props.children}
+    </Button>
+  )
 }
 
 function mapStateToProps(state) {

@@ -43,7 +43,7 @@ const apiPositionMap = {
   'trotter': Pig.Position.TROTTER,
   'snouter': Pig.Position.SNOUTER,
   'leaning_jowler': Pig.Position.LEANER,
-  'bacon': Pig.Position.PLAINSIDE
+  'bacon': Pig.Position.BACON
 }
 
 const positionApiMap = {}
