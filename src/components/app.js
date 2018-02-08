@@ -94,7 +94,7 @@ const App = props => {
         changePlayers={(text) => {
           props.changePlayers(text.split('\n'))
           props.showPlayerModal(false)
-          if (!Api.gameIdIsSet) Api.resetGameId()
+          if (!Api.gameIdIsSet()) Api.resetGameId()
         }}
         visible={props.playerModalVisible}
         toggle={() => props.showPlayerModal(!props.playerModalVisible)}
