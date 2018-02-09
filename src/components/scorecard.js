@@ -71,7 +71,8 @@ const Scorecard = props => {
     : 0
   const turnTotal = Pig.turnScore(props.currentTurn)
   const playerIdx = props.scoreBoard.length % props.players.length
-  const gameTotal = Pig.scoreAccumulations(props.players, props.scoreBoard)[playerIdx].pop()
+  const playerScores = Pig.scoreAccumulations(props.players, props.scoreBoard)[playerIdx]
+  const gameTotal = playerScores ? playerScores.pop() : 0
 
   const image = props.processedImage !== null ? props.processedImage.data : null
 
