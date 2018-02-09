@@ -45,7 +45,7 @@ const App = props => {
       {props.children}
       <Navbar fixedBottom>
         <Navbar.Header>
-          <Link to="/app/scorecard">
+          <Link to="/scorecard">
             <Navbar.Brand>
               SikaScore
             </Navbar.Brand>
@@ -54,19 +54,19 @@ const App = props => {
         </Navbar.Header>
         <Navbar.Collapse>
           <Nav>
-            <LinkContainer to="/app/scorecard">
+            <LinkContainer to="/scorecard">
               <NavItem eventKey={1}>
                 Submit scores
               </NavItem>
             </LinkContainer>
-            <LinkContainer to="/app/scoreboard">
+            <LinkContainer to="/scoreboard">
               <NavItem eventKey={2}>
                 Scoreboard
               </NavItem>
             </LinkContainer>
           </Nav>
           <Nav pullRight>
-            <LinkContainer to="/app/help">
+            <LinkContainer to="/help">
               <NavItem eventKey={3}>
                 Help
               </NavItem>

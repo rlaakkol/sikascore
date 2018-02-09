@@ -24,11 +24,11 @@ load(store).then(() => {
   ReactDOM.render(
     <Provider store={store}>
       <Router history={browserHistory}>
-        <Route path="/app" component={App}>
+        <Route path="/" component={App}>
           <IndexRoute component={Scorecard} />
-          <Route path="/app/scorecard" component={Scorecard} />
-          <Route path="/app/scoreboard" component={ScoreBoard} />
-          <Route path="/app/help" component={HelpPage} />
+          <Route path="/scorecard" component={Scorecard} />
+          <Route path="/scoreboard" component={ScoreBoard} />
+          <Route path="/help" component={HelpPage} />
         </Route>
       </Router>
     </Provider>,

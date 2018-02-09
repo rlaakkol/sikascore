@@ -10,7 +10,7 @@
     "test:watch": "npm run test -- --watch",
     "test:lint": "eslint ./src --ext .js --ext .jsx --cache",
     "package": "NODE_ENV=production webpack --progress --colors",
-    "deploy": "npm run package && surge -p $(git rev-parse --show-toplevel)"
+    "deploy": "cd $(git rev-parse --show-toplevel) && scp bundle.js riku@heitto.vimpa.in:~/ && scp style/style.css riku@heitto.vimpa.in:~/ && scp index.html riku@heitto.vimpa.in:~/ && ssh -t riku@heitto.vimpa.in 'sudo -u sika cp /home/riku/bundle.js /home/sika/app/ &&  sudo -u sika cp /home/riku/style.css /home/sika/app/style/ && sudo -u sika cp /home/riku/index.html /home/sika/app/'"
   },
   "author": "",
   "license": "ISC",
