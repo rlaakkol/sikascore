@@ -113,7 +113,7 @@ const Scorecard = props => {
             </SubmitButton>
           </div>
           <div className="col-md-2 col-md-offset-2">
-            <Button className="btn btn-block btn-warning" onClick={handleEndTurn}>
+            <Button className="btn btn-block btn-warning" onClick={handleEndTurn} style={{ marginTop: '20px'}}>
               End turn
             </Button>
           </div>
