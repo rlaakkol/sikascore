@@ -43,7 +43,7 @@ const turnScore = throws =>
 
 const scoreAccumulations = (players, turns) => {
   const playerturns = []
-  for (let i = 0; i < turns.length; i++) {
+  for (let i = 0; i < players.length; i++) {
     playerturns.push([])
   }
   for (let i = 0; i < turns.length; i++) {
@@ -62,4 +62,19 @@ const scoreAccumulations = (players, turns) => {
   return accumulations
 }
 
-export default { Position, throwScore, turnScore, scoreAccumulations }
+const isLastTurn = (players, turns, currentTurn) => {
+  if (turns.length % players.length !== players.length - 1) return false
+  const totals = scoreAccumulations(players, turns).map(ar => ar.length > 0 ? ar[ar.length-1] : 0)
+
+  if (totals.filter(score => score >= 100).length > 0) return true
+  if (totals[totals.length - 1] + turnScore(currentTurn) >= 100) return true
+  return false
+}
+
+const gameEnded = (players, turns) => {
+  const totals = scoreAccumulations(players, turns).map(ar => ar.length > 0 ? ar[ar.length-1] : 0)
+  if (totals.filter(score => score >= 100).length > 0) return true
+  return false
+}
+
+export default { Position, throwScore, turnScore, scoreAccumulations, isLastTurn, gameEnded }

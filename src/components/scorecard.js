@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Button } from 'react-bootstrap'
+import { browserHistory } from 'react-router'
 
 import PigPicker from './pigpicker'
 import SubmitButton from './submit'
@@ -34,10 +35,17 @@ const Scorecard = props => {
       })
   }
 
+  const checkEndTurn = () => {
+    if (Pig.isLastTurn(props.players, props.scoreBoard, props.currentTurn))
+      browserHistory.push('/scoreboard')
+  }
+
+
   const handleEndTurn = () => {
     props.addTurn(props.currentTurn.slice())
     props.newTurn()
     props.setThrow([null, null])
+    checkEndTurn()
   }
 
   const buttons = [
@@ -108,7 +116,10 @@ const Scorecard = props => {
       <div className="container">
         <div className="row">
           <div className="col-md-2 col-md-offset-2">
-            <SubmitButton className="btn btn-block btn-success">
+            <SubmitButton
+              className="btn btn-block btn-success"
+              checkEndTurn={checkEndTurn}
+            >
               Submit
             </SubmitButton>
           </div>

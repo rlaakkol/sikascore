@@ -19,6 +19,7 @@ const SubmitButton = (props) => {
     if (Pig.throwScore(theThrow) <= 0) {
       props.addTurn(props.currentTurn.concat([theThrow]))
       props.newTurn()
+      props.checkEndTurn()
     }
     props.setThrow([null, null])
     props.setProcessedImage(null)
@@ -70,6 +71,7 @@ SubmitButton.propTypes = {
   addTurn: PropTypes.func,
   updateCurrent: PropTypes.func,
   newTurn: PropTypes.func,
+  checkEndTurn: PropTypes.func,
   setProcessedImage: PropTypes.func,
   currentThrow: PropTypes.array,
   currentTurn: PropTypes.array,
